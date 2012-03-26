@@ -1,2 +1,10 @@
 For js/ part you need Node.js 0.6+ http://nodejs.org/#download
-For java/ part you need Java 1.6+, Maven 3.0+ and Akka 2.0+ http://akka.io/downloads/
+For java/ part you need Java 1.6+, Sbt and Play 2.0+ http://www.playframework.org/
+
+---
+Node.js on EC2 image:
+TBA
+
+---
+Java, Sbt, Play on EC2 image:
+TBA
