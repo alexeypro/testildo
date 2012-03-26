@@ -1,2 +1,2 @@
 #!/bin/sh
-#TODO: duh!
+cd testildo && `which play` run && cd ../
