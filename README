@@ -1,10 +1,91 @@
-For js/ part you need Node.js 0.6+ http://nodejs.org/#download
-For java/ part you need Java 1.6+, Sbt and Play 2.0+ http://www.playframework.org/
+* For js/ part you need Node.js 0.6+ http://nodejs.org/#download
+* For java/ part you need Java 1.6+, Sbt and Play 2.0+ http://www.playframework.org/
 
 ---
-Node.js on EC2 image:
-TBA
+** Running new EC2 instance:
+
+Make sure you have:
+
+$ export EC2_PRIVATE_KEY=`ls ~/.ec2/pk-*.pem`
+$ export EC2_CERT=`ls ~/.ec2/cert-*.pem`
+
+check with:
+
+$ echo $EC2_CERT
+$ echo $EC2_PRIVATE_KEY
+
+$ ssh-keygen -I testildo-ec2 -f ~/Dropbox/_keys/alexeypro/testildo-ec2
+$ ec2-import-keypair testildo-ec2 -f /Users/alexey/Dropbox/_keys/alexeypro/testildo-ec2.pub
+$ ec2-describe-keypairs
+$ chmod 700 ~/Dropbox/_keys/alexeypro/testildo-ec2.pub
+$ ec2-describe-images -o amazon | grep ami-31814f58
+$ ec2-run-instances ami-31814f58 -k testildo-ec2
+
+write down the i-XXXXXX so we can tag it:
+
+$ ec2-create-tags i-144e6670 --tag Name=testildo
+$ ec2-authorize default -p 22
+$ ec2-describe-instances
+
+write down the IP address (first one) and let's go:
+
+$ ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@23.20.112.150
 
 ---
-Java, Sbt, Play on EC2 image:
-TBA
+** Installing Git
+
+$ sudo yum install git 
+
+---
+** Node.js on EC2:
+
+Pretty straightforward, just using this instruction: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+
+$ sudo yum localinstall --nogpgcheck http://nodejs.tchol.org/repocfg/amzn1/nodejs-stable-release.noarch.rpm
+$ sudo yum install nodejs-compat-symlinks npm
+$ node --version
+v0.6.13
+
+---
+** Java, Sbt, Play on EC2:
+
+$ sudo bash
+
+$ mkdir -p /opt/local
+$ cd /opt/local
+
+$ wget http://download.oracle.com/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-i586.rpm
+$ rpm -i jdk-7u1-linux-i586.rpm
+
+Default Java is OpenJDK 1.6:
+
+$ java -version
+java version "1.6.0_22"
+OpenJDK Runtime Environment (IcedTea6 1.10.6) (amazon-52.1.10.6.41.amzn1-i386)
+OpenJDK Client VM (build 20.0-b11, mixed mode)
+
+Change it to the new one:
+
+$ /usr/sbin/alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_01/bin/java 20000
+$ /usr/sbin/alternatives --config java
+
+Just double checking we are good to go:L
+
+$ java -version
+java version "1.7.0_01"
+Java(TM) SE Runtime Environment (build 1.7.0_01-b08)
+Java HotSpot(TM) Client VM (build 21.1-b02, mixed mode, sharing)
+
+Installing Play Framework now:
+
+$ wget -c http://download.playframework.org/releases/play-2.0.zip
+$ unzip play-2.0.zip
+$ export PATH=$PATH:/opt/local/play-2.0
+
+---
+** Checking out source code from GitHub:
+
+$ pwd
+/home/ec2-user
+
+$ git clone git@github.com:alexeypro/testildo.git
