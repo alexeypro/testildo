@@ -1,5 +1,4 @@
-Creating project:
-
-$ mvn archetype:create -DgroupId=com.alexeypro.examples -DartifactId=testildo -DarchetypeArtifactId=maven-archetype-webapp
-$ cd testildo/
-$ mvn eclipse:eclipse
+$ play new testildo
+...
+$ sbt eclipse
+$ play run
