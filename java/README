@@ -1,4 +1,0 @@
-$ play new testildo
-...
-$ sbt eclipse
-$ play run
