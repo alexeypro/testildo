@@ -47,7 +47,7 @@ $ ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@23.20.112.150
 $ sudo yum install git 
 
 ---
-** Node.js on EC2:
+** Node.js, NPM, Express and Mongoose on EC2:
 
 Pretty straightforward, just using this instruction: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
@@ -56,13 +56,12 @@ $ sudo yum install nodejs-compat-symlinks npm
 $ node --version
 v0.6.13
 
----
-** NPM, and everything else needed for Node.js on EC2:
-
 $ cd /tmp && sudo bash
 
 $ curl http://npmjs.org/install.sh | sh
 $ npm install mongoose
+$ npm install express
+$ npm install async
 
 ---
 ** Java, Sbt, Play on EC2:
