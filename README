@@ -1,5 +1,15 @@
-* For js/ part you need Node.js 0.6+ http://nodejs.org/#download
-* For java/ part you need Java 1.6+, Sbt and Play 2.0+ http://www.playframework.org/
+* For js/ part you need NPM 1.0+, Mongoose 1.0+, Node.js 0.6+
+* For java/ part you need Java 1.6+, Sbt and Play 2.0+ 
+
+---
+Preparing Mongo DB instance for the test:
+
+Just registered Database on https://mongolab.com/home
+
+URI: mongodb://testildouser:testildopwd@ds031637.mongolab.com:31637/testildodb
+Database: testildodb
+User: testildouser
+Password: testildopwd
 
 ---
 ** Running new EC2 instance:
@@ -47,6 +57,14 @@ $ node --version
 v0.6.13
 
 ---
+** NPM, and everything else needed for Node.js on EC2:
+
+$ cd /tmp && sudo bash
+
+$ curl http://npmjs.org/install.sh | sh
+$ npm install mongoose
+
+---
 ** Java, Sbt, Play on EC2:
 
 $ sudo bash
@@ -89,3 +107,8 @@ $ pwd
 /home/ec2-user
 
 $ git clone git@github.com:alexeypro/testildo.git
+
+---
+** Let's prepare our poor laptop for the test:
+
+$ brew install httperf
