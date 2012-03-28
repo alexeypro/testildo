@@ -10,7 +10,8 @@ var http            =   require('http'),
 
 
 var TestJSRecord    =   new mongoose.Schema( { title : String, body : String } ),
-    INSERT_COUNT    =   500;      // how many records to insert on every /insert call
+    SELECT_COUNT    =   50,         // how mnay records to select on every /list call
+    INSERT_COUNT    =   500;        // how many records to insert on every /insert call
 
 console.log('Connecting to MongoDB; ' + MONGODB_URI + '...');
 var mongoConn = mongoose.createConnection(MONGODB_URI);
@@ -19,18 +20,17 @@ console.log('Connected and model initialized!');
 
 // make sure app is aware of all the global stuff
 var app = express.createServer();
-app._connections = { 'mongoConn': mongoConn };
-app._models = { 'TestJSRecordModel': TestJSRecordModel };
 
 app.get('/', function(req, res){
     console.log('Request /');
     res.send('Hello World');
+    console.log('Response to / was sent');
 });
 
-app.get('/insert', function(req, res) {
-    console.log('Request /insert');
+app.get('/save', function(req, res) {
+    console.log('Request /save');
     res.send('Inserting random record');
-    // TODO: generate a bunch of random models
+    console.log('Response to /save was sent');
     var count = 0;
     async.whilst(
         function continueWhileTrue() { 
@@ -51,5 +51,16 @@ app.get('/insert', function(req, res) {
     );    
 });
 
+app.get('/find', function(req, res){
+    console.log('Request /find');
+    var q = TestJSRecordModel.find( { } ).limit(SELECT_COUNT);
+    q.execFind(function (err, result) {
+        res.send(result);
+        console.log('Response to /find was sent');
+    });    
+});
+
 app.listen(SERVER_PORT);
-console.log('Open http://localhost:' + SERVER_PORT + ' in the browser to see this server in work');
+console.log('http://localhost:' + SERVER_PORT + '/      - Hello World');
+console.log('http://localhost:' + SERVER_PORT + '/save  - async save ' + INSERT_COUNT + ' record(s) into database');
+console.log('http://localhost:' + SERVER_PORT + '/find  - find ' + SELECT_COUNT + ' record(s) in database');
