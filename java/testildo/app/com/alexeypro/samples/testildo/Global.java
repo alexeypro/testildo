@@ -26,8 +26,6 @@ public class Global extends GlobalSettings {
         Logger.info("onStart(..)");
 
         String portNumber = (app.configuration().getString("http.port") == null) ? DEFAULT_PORT : app.configuration().getString("http.port");
-        // TODO: not sure where do we get the port :-(
-        Logger.info(app.configuration().keys().toString());
         Logger.info("http://localhost:" + portNumber + "/      - Hello World");
         Logger.info("http://localhost:" + portNumber + "/save  - async save " + INSERT_COUNT + " record(s) into database");
         Logger.info("http://localhost:" + portNumber + "/find  - find " + SELECT_COUNT + " record(s) in database");
