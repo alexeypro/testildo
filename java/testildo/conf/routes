@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                           com.alexeypro.samples.testildo.controllers.Application.index()
+GET     /save                       com.alexeypro.samples.testildo.controllers.Application.save()
+GET     /find                       com.alexeypro.samples.testildo.controllers.Application.find()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
