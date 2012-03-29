@@ -6,28 +6,29 @@ import com.alexeypro.samples.testildo.dao.ITestJavaRecordsDAO;
 import com.alexeypro.samples.testildo.services.ITestJavaRecords;
 import com.alexeypro.samples.testildo.vo.TestJavaRecord;
 
-public class TestJavaRecordsImpl implements ITestJavaRecords {	
-	private ITestJavaRecordsDAO testJavaRecordsDAO;
-	
-	public void setDao(ITestJavaRecordsDAO dao) {
-		this.testJavaRecordsDAO = dao;
-	}
+public class TestJavaRecordsImpl implements ITestJavaRecords {
+    private ITestJavaRecordsDAO testJavaRecordsDAO;
 
-	@Override
-	public ITestJavaRecordsDAO getDao() {
-		return testJavaRecordsDAO;
-	}
+    public void setDao(ITestJavaRecordsDAO dao) {
+        this.testJavaRecordsDAO = dao;
+    }
 
-	@Override
-	public String saveRandom(int count) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ITestJavaRecordsDAO getDao() {
+        return testJavaRecordsDAO;
+    }
 
-	@Override
-	public List<TestJavaRecord> find(int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String saveRandom(int myIndex) {
+        long timeStamp = System.currentTimeMillis();
+        String body = "random body " + myIndex + " @ " + timeStamp;
+        String title = "random title " + myIndex + " @ " + timeStamp;
+        return getDao().save(body, title);
+    }
+
+    @Override
+    public List<TestJavaRecord> find(int limit) {
+        return getDao().find(limit);
+    }
 
 }

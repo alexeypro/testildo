@@ -6,28 +6,28 @@ import com.alexeypro.samples.testildo.dao.ITestJavaRecordsDAO;
 import com.alexeypro.samples.testildo.vo.TestJavaRecord;
 
 public interface ITestJavaRecords {
-	
-	/**
-	 * Just a convenience method for now.
-	 * 
-	 * @return
-	 */
-	public ITestJavaRecordsDAO getDao();
-	
-	/**
-	 * Saves randomly generated {@see TestJavaRecord} objects into data storage.
-	 * 
-	 * @param count
-	 * @return
-	 */
-	public String saveRandom(int count);
-	
-	/**
-	 * Returns all {@see TestJavaRecord} objects fetched from the data storage by limit.
-	 * 
-	 * @param limit
-	 * @return
-	 */
-	public List<TestJavaRecord> find(int limit);
-	
+
+    /**
+     * Just a convenience method for now.
+     *
+     * @return
+     */
+    public ITestJavaRecordsDAO getDao();
+
+    /**
+     * Saves randomly generated {@see TestJavaRecord} object into data storage.
+     *
+     * @param myIndex basically order of when this item scheduled to be saved
+     * @return
+     */
+    public String saveRandom(int myIndex);
+
+    /**
+     * Returns all {@see TestJavaRecord} objects fetched from the data storage by limit.
+     *
+     * @param limit
+     * @return
+     */
+    public List<TestJavaRecord> find(int limit);
+
 }

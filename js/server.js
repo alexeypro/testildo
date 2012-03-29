@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 
 app.get('/save', function(req, res) {
     console.log('Request /save');
-    res.send('Inserting random record');
+    res.send('Inserting random records');
     console.log('Response to /save was sent');
     var count = 0;
     async.whilst(
