@@ -1,5 +1,5 @@
 * For js/ part you need NPM 1.0+, Mongoose 1.0+, Node.js 0.6+
-* For java/ part you need Java 1.6+, Sbt and Play 2.0+ 
+* For java/ part you need Java 1.6+, Sbt, Spring 3.1+ and Play 2.0+ 
 
 ---
 Preparing Mongo DB instance for the test:
