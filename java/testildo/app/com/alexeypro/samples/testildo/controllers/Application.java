@@ -14,6 +14,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -36,27 +37,26 @@ public class Application extends Controller {
 
     public static Result saveAsync() {
         final ITestJavaRecords service = Global.getTestJavaRecordsService();
-        F.Promise<String> promiseOfString = Akka.future(
-                new Callable<String>() {
-                    public String call() {
+        F.Promise<List<String>> promiseOfList = Akka.future(
+                new Callable<List<String>>() {
+                    public List<String> call() {
                         Logger.debug("call()");
-                        StringBuilder sb = new StringBuilder();
-                        sb.append(service.saveRandom(0));
-                        for (int i = 1; i != Global.INSERT_COUNT; i++) {
-                            sb.append(", ").append(service.saveRandom(i));
+                        List<String> list = new ArrayList<String>(1);
+                        for (int i = 0; i != Global.INSERT_COUNT; i++) {
+                            list.add(service.saveRandom(i));
                         }
-                        return sb.toString();
+                        return list;
                     }
 
                     ;
                 }
         );
         async(
-                promiseOfString.map(
-                        new F.Function<String, Result>() {
-                            public Result apply(String s) {
-                                Logger.debug("Inserted the following IDs: " + s);
-                                return ok("Inserting random records: " + s);
+                promiseOfList.map(
+                        new F.Function<List<String>, Result>() {
+                            public Result apply(List<String> l) {
+                                Logger.debug("Inserted the following IDs: " + l);
+                                return ok("Inserting random records: " + l);
                             }
                         }
                 )
