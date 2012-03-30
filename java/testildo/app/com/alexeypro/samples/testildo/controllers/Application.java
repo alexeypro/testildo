@@ -27,6 +27,8 @@ public class Application extends Controller {
     }
     
     public static Result find() {
+        ITestJavaRecords service = Global.getTestJavaRecordsService();
+        service.find(50);
         return ok("N/A");
     }
 

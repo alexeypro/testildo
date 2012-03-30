@@ -16,10 +16,12 @@ public class ConnectionMongoImpl implements IConnection {
     public void connect(String username, String password, String hostname, int port, String datastore) {
         try {
             Mongo mongo = new Mongo(hostname, port);
-            this.db = new Morphia().map(TestJavaRecordModel.class).createDatastore(mongo, datastore);
+            this.db = new Morphia().map(TestJavaRecordModel.class).createDatastore(mongo, datastore, username, password.toCharArray());
             this.db.ensureIndexes();
         } catch (UnknownHostException ex) {
-            Logger.error("Exception: " + ex);
+            Logger.error("Connection Exception: " + ex);
+        } catch (Exception e) {
+            Logger.error("Other Exception: " + e);
         }
         Logger.debug("Connected to " + hostname + ":" + port +
                 " using username '" + username + "' and password '" + password + "' to datastore '" + datastore + "'");

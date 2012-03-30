@@ -13,7 +13,7 @@ object ApplicationBuild extends Build {
       "org.springframework" % "spring-core" % "3.1.1.RELEASE",
       "org.springframework" % "spring-asm" % "3.1.1.RELEASE",
       "com.google.code.morphia" % "morphia-logging-slf4j" % "0.99",
-      "com.google.code" % "morphia" % "0.91"
+      "com.google.code.morphia" % "morphia" % "1.00-SNAPSHOT"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(

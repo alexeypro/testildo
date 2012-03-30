@@ -22,7 +22,11 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-        //MorphiaLoggerFactory.registerLogger(SLF4JLogrImplFactory.class);
+
+        // both of these are required to make it work
+        MorphiaLoggerFactory.reset();
+        MorphiaLoggerFactory.registerLogger(SLF4JLogrImplFactory.class);
+
         Global.context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_XML);
         Logger.debug("onStart(..)");
         
