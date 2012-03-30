@@ -4,12 +4,27 @@
 ---
 Preparing Mongo DB instance for the test:
 
-Just registered Database on https://mongolab.com/home
+Registered Database on https://mongolab.com/home
 
 URI: mongodb://testildouser:testildopwd@ds031637.mongolab.com:31637/testildodb
 Database: testildodb
 User: testildouser
 Password: testildopwd
+
+During the tests I find this very helpful:
+
+$ mongo ds031637.mongolab.com:31637/testildodb -u testildouser -p testildopwd
+MongoDB shell version: 2.0.2
+connecting to: ds031637.mongolab.com:31637/testildodb
+> db.testjavarecords.remove({});
+> db.testjsrecords.remove({});
+
+And to verify that there are no survivors:
+
+> db.testjsrecords.count({});
+0
+> db.testjavarecords.count({});
+0
 
 ---
 ** Running new EC2 instance:
