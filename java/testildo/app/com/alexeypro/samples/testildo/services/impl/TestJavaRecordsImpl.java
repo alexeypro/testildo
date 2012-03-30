@@ -1,10 +1,10 @@
 package com.alexeypro.samples.testildo.services.impl;
 
-import java.util.List;
-
 import com.alexeypro.samples.testildo.dao.ITestJavaRecordsDAO;
 import com.alexeypro.samples.testildo.services.ITestJavaRecords;
 import com.alexeypro.samples.testildo.vo.TestJavaRecord;
+
+import java.util.List;
 
 public class TestJavaRecordsImpl implements ITestJavaRecords {
     private ITestJavaRecordsDAO testJavaRecordsDAO;

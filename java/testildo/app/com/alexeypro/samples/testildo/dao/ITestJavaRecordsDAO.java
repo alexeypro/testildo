@@ -26,7 +26,7 @@ public interface ITestJavaRecordsDAO {
      *
      * @param body
      * @param title
-     * @return
+     * @return Id
      */
     public String save(String body, String title);
 
