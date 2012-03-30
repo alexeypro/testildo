@@ -20,4 +20,11 @@ public interface IConnection {
      * @return
      */
     public Object getDb();
+
+    /**
+     * Verifies if we even tried to connect. Ever :-)
+     *
+     * @return
+     */
+    public boolean isConnected();
 }

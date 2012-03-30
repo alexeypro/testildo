@@ -14,9 +14,14 @@
     <context:component-scan base-package="com.alexeypro.samples.testildo.services"/>
      -->
     
-    <bean id="testJavaRecordsDAO" class="com.alexeypro.samples.testildo.dao.impl.TestJavaRecordsMongoDAOImpl" />
+    <bean id="mongoConnection" class="com.alexeypro.samples.testildo.connections.impl.ConnectionMongoImpl" />
+
+    <bean id="testJavaRecordsDAO" class="com.alexeypro.samples.testildo.dao.impl.TestJavaRecordsMongoDAOImpl">
+        <property name="connection" ref="mongoConnection" />
+    </bean>
+
     <bean id="testJavaRecordsService" class="com.alexeypro.samples.testildo.services.impl.TestJavaRecordsImpl">
-    	<property name="dao" ref="testJavaRecordsDAO"/>
+    	<property name="dao" ref="testJavaRecordsDAO" />
     </bean>
     
 </beans>

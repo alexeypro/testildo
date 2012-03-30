@@ -1,8 +1,11 @@
 package com.alexeypro.samples.testildo.dao.impl;
 
 import com.alexeypro.samples.testildo.connections.IConnection;
+import com.alexeypro.samples.testildo.connections.impl.ConnectionMongoImpl;
 import com.alexeypro.samples.testildo.dao.ITestJavaRecordsDAO;
 import com.alexeypro.samples.testildo.vo.TestJavaRecord;
+import com.alexeypro.samples.testildo.vo.mongo.TestJavaRecordModel;
+import com.google.code.morphia.Datastore;
 import play.Logger;
 
 import java.util.List;
@@ -26,9 +29,11 @@ public class TestJavaRecordsMongoDAOImpl implements ITestJavaRecordsDAO {
 
     @Override
     public String save(String body, String title) {
-        Logger.info(getName() + ": save('" + body + "', '" + title + "')");
-
-        return null;
+        TestJavaRecordModel m = new TestJavaRecordModel();
+        m.setBody(body);
+        m.setTitle(title);
+        ((Datastore) getConnection().getDb()).save(m);
+        return (m.getId() == null ? null : m.getId().toString());
     }
 
     @Override

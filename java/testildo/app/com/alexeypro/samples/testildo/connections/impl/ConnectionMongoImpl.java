@@ -21,11 +21,18 @@ public class ConnectionMongoImpl implements IConnection {
         } catch (UnknownHostException ex) {
             Logger.error("Exception: " + ex);
         }
+        Logger.debug("Connected to " + hostname + ":" + port +
+                " using username '" + username + "' and password '" + password + "' to datastore '" + datastore + "'");
     }
 
     @Override
     public Object getDb() {
         return this.db;
+    }
+
+    @Override
+    public boolean isConnected() {
+        return this.db != null;
     }
 
 }
