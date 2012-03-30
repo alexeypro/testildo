@@ -1,9 +1,19 @@
 package com.alexeypro.samples.testildo.vo;
 
+import com.alexeypro.samples.testildo.vo.mongo.TestJavaRecordModel;
+
 public class TestJavaRecord {
     private String id;
     private String body;
     private String title;
+
+    public TestJavaRecord(TestJavaRecordModel rec) {
+        if (rec != null) {
+            this.id = (rec.getId() == null ? null : rec.getId().toString());
+            this.body = rec.getBody();
+            this.title = rec.getTitle();
+        }
+    }
 
     public String getId() {
         return id;
@@ -31,7 +41,7 @@ public class TestJavaRecord {
 
     @Override
     public String toString() {
-        return "TestJavaRecord [id=" + id + ", body=" + body + ", title="
+        return "TestJavaRecordModel [id=" + id + ", body=" + body + ", title="
                 + title + "]";
     }
 

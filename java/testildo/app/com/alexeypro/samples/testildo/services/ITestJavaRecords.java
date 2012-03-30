@@ -15,7 +15,7 @@ public interface ITestJavaRecords {
     public ITestJavaRecordsDAO getDao();
 
     /**
-     * Saves randomly generated {@see TestJavaRecord} object into data storage.
+     * Saves randomly generated {@see TestJavaRecordModel} object into data storage.
      *
      * @param myIndex basically order of when this item scheduled to be saved
      * @return
@@ -23,7 +23,7 @@ public interface ITestJavaRecords {
     public String saveRandom(int myIndex);
 
     /**
-     * Returns all {@see TestJavaRecord} objects fetched from the data storage by limit.
+     * Returns all {@see TestJavaRecordModel} objects fetched from the data storage by limit.
      *
      * @param limit
      * @return
