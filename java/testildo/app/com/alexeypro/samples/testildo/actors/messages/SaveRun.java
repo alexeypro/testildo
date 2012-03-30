@@ -3,13 +3,13 @@ package com.alexeypro.samples.testildo.actors.messages;
 // -> Master
 // sent to Master actor to initiate (start) the execution
 public class SaveRun {
-    private final int index;
+    private final int count;
 
-    public SaveRun(int index) {
-        this.index = index; // passing it here just to make it as a starting point
+    public SaveRun(int count) {
+        this.count = count;
     }
 
-    public int getIndex() {
-        return this.index;
+    public int getCount() {
+        return this.count;
     }
 }

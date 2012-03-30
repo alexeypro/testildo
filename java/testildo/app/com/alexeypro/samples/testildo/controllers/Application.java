@@ -94,7 +94,7 @@ public class Application extends Controller {
         }), "saveMaster");
 
         // start the calculation
-        master.tell(new SaveRun(1));
+        master.tell(new SaveRun(Global.INSERT_COUNT));
     }
 
 

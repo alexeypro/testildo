@@ -11,6 +11,8 @@ import com.alexeypro.samples.testildo.actors.messages.SaveWork;
 import com.alexeypro.samples.testildo.services.ITestJavaRecords;
 import play.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // master actor
@@ -19,6 +21,9 @@ public class SaveMaster extends UntypedActor {
     private final long start = System.currentTimeMillis();
     private final ActorRef listener;
     private final ActorRef workerRouter;
+    private int requiredCount;
+    private int actualCount;
+    private List<String> allResults = new ArrayList<String>(1);
 
     public SaveMaster(ITestJavaRecords service, ActorRef listener) {
         Logger.debug("SaveMaster.constructor");
@@ -33,12 +38,20 @@ public class SaveMaster extends UntypedActor {
         Logger.debug("SaveMaster.onReceive");
         if (message instanceof SaveRun) {
             SaveRun run = (SaveRun) message;
-            this.workerRouter.tell(new SaveWork(this.service, run.getIndex()), getSelf());
+            this.requiredCount = run.getCount();    // we'll need it later to know how many results we expect to get back.
+            for (int i = 0; i != requiredCount; i++) {
+                this.workerRouter.tell(new SaveWork(this.service, i), getSelf());
+            }
         } else if (message instanceof SaveResult) {
             SaveResult res = (SaveResult) message;
-            Duration duration = Duration.create(System.currentTimeMillis() - this.start, TimeUnit.MILLISECONDS);
-            this.listener.tell(new SaveFinal(res.getResult(), duration), getSelf());
-            getContext().stop(getSelf());
+            this.actualCount++;
+            this.allResults.add(res.getResult());
+            Logger.debug("Required count (expected results) = " + this.requiredCount + ", actual count = " + this.actualCount);
+            if (this.requiredCount == this.actualCount) {
+                Duration duration = Duration.create(System.currentTimeMillis() - this.start, TimeUnit.MILLISECONDS);
+                this.listener.tell(new SaveFinal(this.allResults, duration), getSelf());
+                getContext().stop(getSelf());
+            }
         } else {
             unhandled(message);
         }

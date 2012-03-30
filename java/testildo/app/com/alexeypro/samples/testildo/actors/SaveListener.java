@@ -11,7 +11,7 @@ public class SaveListener extends UntypedActor {
         Logger.debug("SaveListener.onReceive");
         if (message instanceof SaveFinal) {
             SaveFinal result = (SaveFinal) message;
-            Logger.info("Job is done with result: " + result.getResult() + " and it took: " + result.getDuration());
+            Logger.info("Job is done with results: " + result.getResults() + " and it took: " + result.getDuration());
             getContext().system().shutdown();
         } else {
             unhandled(message);
