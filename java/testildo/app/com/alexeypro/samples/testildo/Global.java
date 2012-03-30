@@ -11,38 +11,51 @@ import play.Logger;
 import com.alexeypro.samples.testildo.services.ITestJavaRecords;
 import com.google.code.morphia.logging.MorphiaLoggerFactory;
 import com.google.code.morphia.logging.slf4j.SLF4JLogrImplFactory;
+import play.Configuration;
 
 public class Global extends GlobalSettings {
     private final static String APPLICATION_CONTEXT_XML = "application-context.xml";
     private final static String DEFAULT_PORT = "9000";
     public final static int INSERT_COUNT = 5;
-    public final static int SELECT_COUNT = 5;
+    public final static int SELECT_COUNT = 50;
 
     private static ApplicationContext context;
 
     @Override
     public void onStart(Application app) {
-
-        // both of these are required to make it work
-        MorphiaLoggerFactory.reset();
-        MorphiaLoggerFactory.registerLogger(SLF4JLogrImplFactory.class);
-
-        Global.context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_XML);
         Logger.debug("onStart(..)");
-        
-        String dbUsername = app.configuration().getString("morphia.user");
-        String dbPassword = app.configuration().getString("morphia.password");
-        String dbHostname = app.configuration().getString("morphia.hostname");
-        int dbPort = app.configuration().getInt("morphia.port");
-        String dbName = app.configuration().getString("morphia.datastore");
-        Logger.debug("mongodb://" + dbUsername + ":" + dbPassword + "@" + dbHostname + ":" + dbPort + "/" + dbName);
-        IConnection c = (IConnection) Global.context.getBean("mongoConnection");
-        c.connect(dbUsername, dbPassword, dbHostname, dbPort, dbName);
+        this.initialize();
+        this.initializeSpring();
+        this.initializeConnections(app.configuration());
+        this.showUsage(app.configuration());
+    }
 
-        String portNumber = (app.configuration().getString("http.port") == null) ? DEFAULT_PORT : app.configuration().getString("http.port");
+    private void showUsage(Configuration cfg) {
+        String portNumber = (cfg.getString("http.port") == null) ? DEFAULT_PORT : cfg.getString("http.port");
         Logger.info("http://localhost:" + portNumber + "/      - Hello World");
         Logger.info("http://localhost:" + portNumber + "/save  - async save " + INSERT_COUNT + " record(s) into database");
         Logger.info("http://localhost:" + portNumber + "/find  - find " + SELECT_COUNT + " record(s) in database");
+    }
+
+    private void initialize() {
+        // both of these are required to make it work
+        MorphiaLoggerFactory.reset();
+        MorphiaLoggerFactory.registerLogger(SLF4JLogrImplFactory.class);
+    }
+
+    private void initializeSpring() {
+        Global.context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_XML);
+    }
+
+    private void initializeConnections(Configuration cfg) {
+        String dbUsername = cfg.getString("morphia.user");
+        String dbPassword = cfg.getString("morphia.password");
+        String dbHostname = cfg.getString("morphia.hostname");
+        int dbPort = cfg.getInt("morphia.port");
+        String dbName = cfg.getString("morphia.datastore");
+        Logger.debug("mongodb://" + dbUsername + ":" + dbPassword + "@" + dbHostname + ":" + dbPort + "/" + dbName);
+        IConnection c = (IConnection) Global.context.getBean("mongoConnection");
+        c.connect(dbUsername, dbPassword, dbHostname, dbPort, dbName);
     }
 
     @Override
