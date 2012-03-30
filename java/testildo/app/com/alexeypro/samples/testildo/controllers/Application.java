@@ -2,6 +2,7 @@ package com.alexeypro.samples.testildo.controllers;
 
 import com.alexeypro.samples.testildo.vo.TestJavaRecord;
 import play.Logger;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -28,12 +29,10 @@ public class Application extends Controller {
         return ok("Inserting random records");
     }
 
-    //TODO: make sure we actually show something :-)
     public static Result find() {
         ITestJavaRecords service = Global.getTestJavaRecordsService();
         List<TestJavaRecord> result = service.find(Global.SELECT_COUNT);
-        Logger.info(result.toString());
-        return ok("N/A");
+        return ok(Json.toJson(result));
     }
 
 }
