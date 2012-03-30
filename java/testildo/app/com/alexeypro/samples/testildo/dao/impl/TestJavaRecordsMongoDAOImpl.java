@@ -9,6 +9,7 @@ import com.google.code.morphia.Datastore;
 import org.bson.types.ObjectId;
 import play.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestJavaRecordsMongoDAOImpl implements ITestJavaRecordsDAO {
@@ -44,15 +45,16 @@ public class TestJavaRecordsMongoDAOImpl implements ITestJavaRecordsDAO {
 
     @Override
     public List<TestJavaRecord> find(int limit) {
+        List<TestJavaRecord> result = new ArrayList<TestJavaRecord>(1);
         Logger.info(getName() + ": find(" + limit + ")");
         Datastore ds = (Datastore) getConnection().getDb();
         if (ds == null) {
             Logger.error("Datastore was not properly initialized!");
         } else {
-            List<TestJavaRecordModel> result = ds.find(TestJavaRecordModel.class).limit(limit).asList();
-            Logger.debug(result.toString());
+            List<TestJavaRecordModel> resModels = ds.find(TestJavaRecordModel.class).limit(limit).asList();
+            result = TestJavaRecord.fromList(resModels);
         }
-        return null;
+        return result;
     }
 
 }

@@ -2,6 +2,9 @@ package com.alexeypro.samples.testildo.vo;
 
 import com.alexeypro.samples.testildo.vo.mongo.TestJavaRecordModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestJavaRecord {
     private String id;
     private String body;
@@ -37,6 +40,23 @@ public class TestJavaRecord {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * Helper method to do the conversion
+     *
+     * @param src
+     * @return
+     */
+    public final static List<TestJavaRecord> fromList(List<TestJavaRecordModel> src) {
+        List<TestJavaRecord> result = new ArrayList<TestJavaRecord>(1);
+        if (src == null || src.isEmpty()) {
+            return result;
+        }
+        for (TestJavaRecordModel m : src) {
+            result.add(new TestJavaRecord(m));
+        }
+        return result;
     }
 
     @Override
