@@ -29,7 +29,10 @@ And to verify that there are no survivors:
 ---
 ** Running new EC2 instance:
 
-Make sure you have:
+Make sure you have installed http://s3.amazonaws.com/ec2-downloads/ec2-api-tools.zip and:
+
+$ export EC2_HOME=/opt/local/ec2-api-tools-1.5.2.5
+$ export PATH=$PATH:$EC2_HOME/bin
 
 $ export EC2_PRIVATE_KEY=`ls ~/.ec2/pk-*.pem`
 $ export EC2_CERT=`ls ~/.ec2/cert-*.pem`
@@ -48,13 +51,20 @@ $ ec2-run-instances ami-31814f58 -k testildo-ec2
 
 write down the i-XXXXXX so we can tag it:
 
-$ ec2-create-tags i-144e6670 --tag Name=testildo
+$ ec2-create-tags i-10230b74 --tag Name=testildo
+
+Enabling ssh port, and ports for our servers
 $ ec2-authorize default -p 22
+$ ec2-authorize default -p 9000
+$ ec2-authorize default -p 9191
+$ ec2-authorize default -p 8000
+$ ec2-authorize default -p 8181
+
 $ ec2-describe-instances
 
 write down the IP address (first one) and let's go:
 
-$ ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@23.20.112.150
+$ ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@ec2-107-20-53-115.compute-1.amazonaws.com
 
 ---
 ** Installing Git
@@ -120,9 +130,32 @@ $ export PATH=$PATH:/opt/local/play-2.0
 $ pwd
 /home/ec2-user
 
-$ git clone git@github.com:alexeypro/testildo.git
+$ git clone https://github.com/alexeypro/testildo.git
 
 ---
-** Let's prepare our poor laptop for the test:
+** Installing LT software on other instance:
 
-$ brew install httperf
+Let's stop current so we don't waste money:
+
+$ ec2-describe-instances
+$ ec2-stop-instances i-10230b74
+$ ec2-describe-instance-status i-10230b74
+
+Need to create new box for the client and install "httperf" http://www.hpl.hp.com/research/linux/httperf and "autobench" https://github.com/menavaur/Autobench
+Autobench's config you can get from https://github.com/menavaur/Autobench/blob/master/autobench.conf
+I got AMI from http://alestic.com/, which is Ubuntu 11.10 Oneiric EBS boot 64 bit (us-east-1)
+
+$ ec2-run-instances ami-baba68d3 -k testildo-ec2
+$ ec2-create-tags i-b1c029d6 --tag Name=testildo_client
+$ ec2-describe-instances
+$ ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ubuntu@ec2-174-129-91-54.compute-1.amazonaws.com
+$ sudo apt-get -y install git-core
+$ sudo apt-get install apache2-utils
+$ sudo apt-get install httperf
+$ sudo apt-get install make
+$ git clone https://github.com/menavaur/Autobench.git
+
+Need out conf file :-)
+$ sudo cp autobench.conf /home/ubuntu/.autobench.conf
+
+$ ec2-stop-instances i-b1c029d6
