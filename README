@@ -159,3 +159,7 @@ Need out conf file :-)
 $ sudo cp autobench.conf /home/ubuntu/.autobench.conf
 
 $ ec2-stop-instances i-b1c029d6
+
+Just in case -- on Mac OS X it's just as simple as:
+$ brew install autobench
+$ brew install httperf
