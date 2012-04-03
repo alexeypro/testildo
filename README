@@ -197,3 +197,12 @@ Ready to go back to the client and run autobench :-)
 Getting results back:
 
 $ scp -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ubuntu@ec2-50-17-113-225.compute-1.amazonaws.com:/home/ubuntu/TEST* ./results/
+
+Converting to CSV from TSV:
+
+$ tr '\t' ',' < ~/code/alexeypro/testildo/results/TEST-find.tsv > TEST-find.csv 
+$ tr '\t' ',' < ~/code/alexeypro/testildo/results/TEST-helloworld.tsv > TEST-helloworld.csv 
+$ tr '\t' ',' < ~/code/alexeypro/testildo/results/TEST-save.tsv > TEST-save.csv 
+$ tr '\t' ',' < ~/code/alexeypro/testildo/results/TEST-saveasync.tsv > TEST-saveasync.csv 
+
+Use anything like http://home.gna.org/veusz/downloads/ to build graphs
