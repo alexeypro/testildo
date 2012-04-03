@@ -163,3 +163,7 @@ $ ec2-stop-instances i-b1c029d6
 Just in case -- on Mac OS X it's just as simple as:
 $ brew install autobench
 $ brew install httperf
+
+Copy config and run uncommenting specific URI:
+
+$ cp conf/autobench.conf ~/.autobench.conf
