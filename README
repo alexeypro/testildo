@@ -167,3 +167,22 @@ $ brew install httperf
 Copy config and run uncommenting specific URI:
 
 $ cp conf/autobench.conf ~/.autobench.conf
+
+We want to clone this server instance so we run JS and Java side by side:
+
+$ ec2-create-tags i-10230b74 --tag Name=testildo_js
+$ ec2-create-image i-10230b74 -n testildo_server_ami
+
+Then wait... wait.. wait.. (Take a while, huh?) Basically I think we a looking at 30-45 minutes before it'll be done.
+
+$ ec2-run-instances ami-39b96050 -k testildo-ec2
+$ ec2-create-tags i-?????? --tag Name=testildo_java
+
+Now we should be good to go. Start bothi (js, and java):
+
+$ ec2-start-instances i-10230b74
+$ ec2-start-instances i-????????
+
+Log in, launch Java and Node stuff with run.sh's.
+Ready to go back to the client and run autobench :-)
+
