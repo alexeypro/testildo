@@ -176,12 +176,17 @@ $ ec2-create-image i-10230b74 -n testildo_server_ami
 Then wait... wait.. wait.. (Take a while, huh?) Basically I think we a looking at 30-45 minutes before it'll be done.
 
 $ ec2-run-instances ami-39b96050 -k testildo-ec2
-$ ec2-create-tags i-?????? --tag Name=testildo_java
+$ ec2-create-tags i-35ef0452 --tag Name=testildo_java
 
-Now we should be good to go. Start bothi (js, and java):
+Now we should be good to go. Start both (js, and java) and client:
 
 $ ec2-start-instances i-10230b74
-$ ec2-start-instances i-????????
+$ ec2-start-instances i-35ef0452
+$ ec2-start-instances i-b1c029d6
+
+$ alias ssh_testjs="ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@ec2-23-20-136-73.compute-1.amazonaws.com"
+$ alias ssh_testjava="ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ec2-user@ec2-174-129-116-151.compute-1.amazonaws.com"
+$ alias ssh_testclient="ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ubuntu@ec2-50-17-113-225.compute-1.amazonaws.com"
 
 Log in, launch Java and Node stuff with run.sh's.
 Ready to go back to the client and run autobench :-)
