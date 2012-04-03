@@ -191,3 +191,4 @@ $ alias ssh_testclient="ssh -v -i ~/Dropbox/_keys/alexeypro/testildo-ec2 ubuntu@
 Log in, launch Java and Node stuff with run.sh's.
 Ready to go back to the client and run autobench :-)
 
+./autobench --host1 ec2-23-20-136-73.compute-1.amazonaws.com --host2 ec2-174-129-116-151.compute-1.amazonaws.com --file ~/.sample1.tsv
